@@ -23,7 +23,6 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (Throwable $e){
             if ($e instanceof NotFoundCustomerException ||
-                $e instanceof SupplierNotFound ||
                 $e instanceof SupplierNotFoundException) {
                     return new JsonResponse([
                         'message' => $e->getMessage()
