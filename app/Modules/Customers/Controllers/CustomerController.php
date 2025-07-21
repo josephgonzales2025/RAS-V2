@@ -2,12 +2,10 @@
 
 namespace App\Modules\Customers\Controllers;
 
-use App\Modules\Customers\DTOs\CustomerDTO;
 use App\Modules\Customers\Requests\StoreCustomerRequest;
 use App\Modules\Customers\Requests\UpdateCustomerRequest;
 use App\Modules\Customers\Services\CustomerService;
 use App\Http\Controllers\Controller;
-use App\Modules\CustomerAddresses\DTOs\CustomerAddressDTO;
 use Illuminate\Http\JsonResponse;
 
 class CustomerController extends Controller
