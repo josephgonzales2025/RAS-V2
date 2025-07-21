@@ -2,6 +2,7 @@
 
 namespace App\Modules\Customers\Repositories\Eloquent;
 
+use App\Modules\Customers\Exceptions\NotFoundCustomerException;
 use App\Modules\Customers\Models\Customer;
 use App\Modules\Customers\Repositories\Interface\CustomerRepositoryInterface;
 
@@ -24,15 +25,20 @@ class CustomerRepository implements CustomerRepositoryInterface
 
     public function update($data, $id)
     {
-        $customer = Customer::find($id);
+        $customer = $this->findById($id);
         $customer->update($data);
         return $customer;
     }
 
     public function delete($id)
     {
-        $customer = Customer::findOrFail($id);
+        $customer = $this->findById($id);
+
+        if(!$customer)
+        {
+            throw new NotFoundCustomerException();
+        }
+        
         $customer->delete();
-        return $customer;
     }
 }
