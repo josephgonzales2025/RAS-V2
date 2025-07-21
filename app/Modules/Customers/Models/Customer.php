@@ -2,7 +2,7 @@
 
 namespace App\Modules\Customers\Models;
 
-use App\Domains\CustomerAddresses\Models\CustomerAddress;
+use App\Modules\CustomerAddresses\Models\CustomerAddress;
 use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model

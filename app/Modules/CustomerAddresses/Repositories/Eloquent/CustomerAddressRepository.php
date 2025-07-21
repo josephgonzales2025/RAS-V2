@@ -1,15 +1,21 @@
 <?php
 
-namespace App\Modules\CustomerAdresses\Repositories\Eloquent;
+namespace App\Modules\CustomerAddresses\Repositories\Eloquent;
 
 use App\Modules\CustomerAddresses\Models\CustomerAddress;
 use App\Modules\CustomerAddresses\Repositories\Interfaces\CustomerAddressRepositoryInterface;
+use App\Modules\Customers\Models\Customer;
 
 class CustomerAddressRepository implements CustomerAddressRepositoryInterface
 {
-    public function create(array $data)
+    public function create(Customer $customer,array $data)
     {
-        return CustomerAddress::create($data);
+        return $customer->customerAddresses()->create([
+            'address' => $data['address'],
+            'department' => $data['department'],
+            'province' => $data['province'],
+            'district' => $data['district']
+        ]);
     }
 
     public function update(array $data, $id)

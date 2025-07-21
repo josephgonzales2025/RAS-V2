@@ -8,6 +8,7 @@ use App\Modules\Customers\Requests\StoreCustomerRequest;
 use App\Modules\Customers\Requests\UpdateCustomerRequest;
 use App\Modules\Customers\Services\CustomerService;
 use App\Http\Controllers\Controller;
+use App\Modules\CustomerAddresses\DTOs\CustomerAddressDTO;
 use Illuminate\Http\JsonResponse;
 
 class CustomerController extends Controller
@@ -32,8 +33,18 @@ class CustomerController extends Controller
 
     public function store(StoreCustomerRequest $request) : JsonResponse
     {
-        $customerDTO = new CustomerDTO($request->validated());
-        $customer = $this->customerService->createCustomer($customerDTO);
+        $validatedData = $request->validated();
+        $customerDTO = new CustomerDTO([
+            'ruc_dni' => $validatedData['ruc_dni'],
+            'business_name' => $validatedData['business_name']
+        ]);
+        $customerAddressDTO = new CustomerAddressDTO([
+            'address' => $validatedData['address']['address'],
+            'department' => $validatedData['address']['department'],
+            'province' => $validatedData['address']['province'],
+            'district' => $validatedData['address']['district']
+        ]);
+        $customer = $this->customerService->createCustomer($customerDTO->toArray(), $customerAddressDTO->toArray());
 
         return new JsonResponse($customer, 201);
     }

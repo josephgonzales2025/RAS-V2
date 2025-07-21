@@ -2,9 +2,11 @@
 
 namespace App\Modules\CustomerAddresses\Repositories\Interfaces;
 
+use App\Modules\Customers\Models\Customer;
+
 interface CustomerAddressRepositoryInterface
 {
-    public function create(array $data);
+    public function create(Customer $customer,array $data);
 
     public function update(array $data, $id);
 

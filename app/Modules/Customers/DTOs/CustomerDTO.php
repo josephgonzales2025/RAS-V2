@@ -17,7 +17,7 @@ class CustomerDTO
     {
         return [
             'ruc_dni' => $this->ruc_dni,
-            'business_name' => $this->business_name,
+            'business_name' => $this->business_name
         ];
     }
 }

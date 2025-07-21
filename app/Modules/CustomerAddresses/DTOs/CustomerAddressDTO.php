@@ -4,7 +4,6 @@ namespace App\Modules\CustomerAddresses\DTOs;
 
 class CustomerAddressDTO
 {
-    public $customer_id;
     public $address;
     public $department;
     public $province;
@@ -12,7 +11,6 @@ class CustomerAddressDTO
 
     public function __construct(array $data)
     {
-        $this->customer_id = $data['customer_id'];
         $this->address = $data['address'];
         $this->department = $data['department'];
         $this->province = $data['province'];
@@ -22,7 +20,6 @@ class CustomerAddressDTO
     public function toArray()
     {
         return [
-            'customer_id' => $this->customer_id,
             'address' => $this->address,
             'department' => $this->department,
             'province' => $this->province,

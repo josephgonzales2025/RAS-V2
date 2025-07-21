@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
             $table->string('address');
-            $table->string('deparment');
+            $table->string('department');
             $table->string('province');
             $table->string('district');
             $table->timestamps();
