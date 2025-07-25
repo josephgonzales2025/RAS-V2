@@ -23,9 +23,8 @@ class CustomerRepository implements CustomerRepositoryInterface
         return Customer::find($id);
     }
 
-    public function update($data, $id)
+    public function update($data, Customer $customer)
     {
-        $customer = $this->findById($id);
         $customer->update($data);
         return $customer;
     }

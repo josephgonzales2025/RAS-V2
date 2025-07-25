@@ -2,6 +2,7 @@
 
 use App\Modules\Customers\Exceptions\NotFoundCustomerException;
 use App\Exceptions\SupplierNotFound;
+use App\Modules\Drivers\Exceptions\DriverNotFoundException;
 use App\Modules\Suppliers\Exceptions\SupplierNotFoundException;
 use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Foundation\Application;
@@ -23,7 +24,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (Throwable $e){
             if ($e instanceof NotFoundCustomerException ||
-                $e instanceof SupplierNotFoundException) {
+                $e instanceof SupplierNotFoundException ||
+                $e instanceof DriverNotFoundException) {
                     return new JsonResponse([
                         'message' => $e->getMessage()
                     ], 404);

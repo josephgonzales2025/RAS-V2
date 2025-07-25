@@ -79,7 +79,7 @@ class CustomerService
         return DB::transaction(function () use ($customer, $customerAddressId, $customerDTO, $customerAddressDTO){
             $this->customerAddressRepository->update($customerAddressDTO->toArray(), $customerAddressId);
 
-            $customer = $this->customerRepository->update($customerDTO->toArray(), $customer->id);
+            $customer = $this->customerRepository->update($customerDTO->toArray(), $customer);
 
             return $customer->load('customerAddresses');
         });
