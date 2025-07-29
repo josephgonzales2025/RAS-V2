@@ -28,27 +28,16 @@ class DriverService
 
     public function findDriverById($id)
     {
-        $driver = $this->driverRepository->getById($id);
-
-        if(!$driver)
-        {
-            throw new DriverNotFoundException('Driver not found');
-        }
-
-        return $driver;
+        return $this->driverRepository->getById($id);
     }
 
     public function updateDriver(DriverDTO $driverDTO, $id)
     {
-        $driver = $this->findDriverById($id);
-
-        return $this->driverRepository->updateDriver($driverDTO->toArray(), $driver);
+        return $this->driverRepository->updateDriver($driverDTO->toArray(), $id);
     }
 
     public function deleteDriver($id)
     {
-        $driver = $this->findDriverById($id);
-
-        $this->driverRepository->deleteDriver($driver);
+        $this->driverRepository->deleteDriver($id);
     }
 }

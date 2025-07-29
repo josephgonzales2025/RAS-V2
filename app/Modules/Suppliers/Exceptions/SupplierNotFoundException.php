@@ -2,9 +2,9 @@
 
 namespace App\Modules\Suppliers\Exceptions;
 
-use Exception;
+use App\Exceptions\BaseNotFoundException;
 
-class SupplierNotFoundException extends Exception
+class SupplierNotFoundException extends BaseNotFoundException
 {
     public function __construct($message = 'Supplier not found')
     {

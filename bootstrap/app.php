@@ -1,10 +1,6 @@
 <?php
 
-use App\Modules\Customers\Exceptions\NotFoundCustomerException;
-use App\Exceptions\SupplierNotFound;
-use App\Modules\Drivers\Exceptions\DriverNotFoundException;
-use App\Modules\Suppliers\Exceptions\SupplierNotFoundException;
-use Illuminate\Database\Eloquent\Casts\Json;
+use App\Contracts\RenderableException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -23,13 +19,13 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (Throwable $e){
-            if ($e instanceof NotFoundCustomerException ||
-                $e instanceof SupplierNotFoundException ||
-                $e instanceof DriverNotFoundException) {
-                    return new JsonResponse([
-                        'message' => $e->getMessage()
-                    ], 404);
-                }
+            if ($e instanceof RenderableException)
+            {
+                return new JsonResponse(
+                    $e->getErrorResponse(), 
+                    $e->getStatusCode()
+                );
+            }
 
             if ($e instanceof ValidationException) {
                 return new JsonResponse([

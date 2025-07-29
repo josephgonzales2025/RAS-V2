@@ -25,7 +25,7 @@ class SupplierController extends Controller
 
         if ($suppliers->isEmpty()){
             return new JsonResponse([
-                'message' => 'No suppliers found'
+                'message' => 'There are no registered suppliers'
             ], 404);
         }
 
@@ -44,36 +44,20 @@ class SupplierController extends Controller
     {
         $supplier = $this->supplierService->getSupplierById($id);
 
-        if (!$supplier) {
-            throw new SupplierNotFoundException();
-        }
-
         return new JsonResponse($supplier, 200);
     }
 
     public function update(UpdateSupplierRequest $request, $id) : JsonResponse
     {
-        $supplier = $this->supplierService->getSupplierById($id);
-
-        if (!$supplier) {
-            throw new SupplierNotFoundException();
-        }
-
         $supplierDTO = new SupplierDTO($request->validated());
         $updatedSupplier = $this->supplierService->updateSupplier($supplierDTO, $id);
 
         return new JsonResponse($updatedSupplier, 200);
     }
 
-    public function delete($id): JsonResponse
+    public function destroy($id): JsonResponse
     {
-        $supplier = $this->supplierService->getSupplierById($id);
-
-        if (!$supplier) {
-            throw new SupplierNotFoundException();
-        }
-
-        $supplier->delete();
+        $this->supplierService->deleteSupplier($id);
 
         return new JsonResponse(['message' => 'Supplier deleted successfully'], 200);
     }

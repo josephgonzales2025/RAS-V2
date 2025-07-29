@@ -12,7 +12,7 @@ interface DriverRepositoryInterface
 
     public function getById($id);
 
-    public function updateDriver(array $data, Driver $driver);
+    public function updateDriver(array $data, $id);
 
-    public function deleteDriver(Driver $driver);
+    public function deleteDriver($id);
 }
