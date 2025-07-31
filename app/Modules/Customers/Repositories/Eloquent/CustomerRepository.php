@@ -20,11 +20,19 @@ class CustomerRepository implements CustomerRepositoryInterface
 
     public function findById($id)
     {
-        return Customer::find($id);
+        $customer = Customer::find($id);
+
+        if(!$customer)
+        {
+            throw new NotFoundCustomerException();
+        }
+
+        return $customer;
     }
 
-    public function update($data, Customer $customer)
+    public function update($data, $id)
     {
+        $customer = $this->findById($id);
         $customer->update($data);
         return $customer;
     }
@@ -32,11 +40,6 @@ class CustomerRepository implements CustomerRepositoryInterface
     public function delete($id)
     {
         $customer = $this->findById($id);
-
-        if(!$customer)
-        {
-            throw new NotFoundCustomerException();
-        }
         
         $customer->delete();
     }

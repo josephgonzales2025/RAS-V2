@@ -50,19 +50,11 @@ class CustomerService
 
     public function findCustomerById($id)
     {
-        $customer = $this->customerRepository->findById($id);
-
-        if(!$customer)
-        {
-            throw new NotFoundCustomerException();
-        }
-
-        return $customer;
+        return $this->customerRepository->findById($id);
     }
 
     public function updateCustomer(array $validatedData, $id)
     {
-        $customer = $this->findCustomerById($id);
         $customerDTO = new CustomerDTO([
             'ruc_dni' => $validatedData['ruc_dni'],
             'business_name' => $validatedData['business_name']
@@ -76,10 +68,10 @@ class CustomerService
             'district' => $validatedData['address']['district']
         ]);
 
-        return DB::transaction(function () use ($customer, $customerAddressId, $customerDTO, $customerAddressDTO){
+        return DB::transaction(function () use ($id, $customerAddressId, $customerDTO, $customerAddressDTO){
             $this->customerAddressRepository->update($customerAddressDTO->toArray(), $customerAddressId);
 
-            $customer = $this->customerRepository->update($customerDTO->toArray(), $customer);
+            $customer = $this->customerRepository->update($customerDTO->toArray(), $id);
 
             return $customer->load('customerAddresses');
         });

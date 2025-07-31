@@ -12,7 +12,7 @@ interface CustomerRepositoryInterface
 
     public function findById($id);
 
-    public function update(array $data, Customer $customer);
+    public function update(array $data, $id);
 
     public function delete($id);
 }
